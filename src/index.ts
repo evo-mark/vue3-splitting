@@ -62,10 +62,10 @@ import { processInput } from './process';
 </h1>
 */
 
-export const useSplitting = (input: string, userConfig: UserConfig = {}): VNode => {
+export const useSplitting = (input: string, userConfig: UserConfig = {}): () => VNode => {
 	const config = resolveConfig(userConfig);
 
-	return h(
+	return () => h(
 		config.wrapperTag,
 		{
 			class: config.wrapperClass

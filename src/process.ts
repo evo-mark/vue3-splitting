@@ -1,5 +1,5 @@
 import type { SplittingConfig } from './config';
-import { reactive, h, Text, Fragment } from 'vue';
+import { h, Text, Fragment } from 'vue';
 import type { VNode } from 'vue';
 
 const mapLines = (input: string): VNode[] => {
@@ -27,7 +27,9 @@ const processLines = (lines: VNode[], config: SplittingConfig) => {
 					'--line-index': index + config.lineOffset
 				}
 			},
-			line.children
+			{
+				default: () => line.children
+			}
 		)
 	);
 };
@@ -36,15 +38,19 @@ const processWords = (lines: VNode[], config: SplittingConfig): void => {
 	let words = 0;
 	lines.forEach((line) => {
 		line.children = (line.children as VNode[]).map((word, index) => {
+			const textWord = word.children ? (word.children as VNode[]).map(c => c.children).join("") : "";
 			return h(
 				config.wordTag,
 				{
 					class: config.wordClass,
 					style: {
 						'--word-index': index + words + config.wordOffset
-					}
+					},
+					'data-word': textWord
 				},
-				word.children
+				{
+					default: () => word.children
+				}
 			);
 		});
 		words += line.children.length;
@@ -62,7 +68,8 @@ const processChars = (lines: VNode[], config: SplittingConfig): void => {
 						class: config.charClass,
 						style: {
 							'--char-index': index + chars + config.charOffset
-						}
+						},
+						'data-char': char.children
 					},
 					char
 				);
@@ -79,9 +86,10 @@ const processNodeMap = (nodeMap: VNode[], config: SplittingConfig) => {
 	return lines;
 };
 
-const insertWhitespace = (nodes) => {
+const insertWhitespace = (nodes: VNode[]) => {
 	nodes.forEach((node) => {
-		node.children = node.children.reduce((acc, curr) => {
+		if (!node.children || Array.isArray(node.children) === false) return;
+		node.children = (node.children as VNode[]).reduce((acc: Array<VNode>, curr: VNode) => {
 			acc.push(curr);
 			acc.push(
 				h(
@@ -97,8 +105,8 @@ const insertWhitespace = (nodes) => {
 	});
 };
 
-const insertLineBreaks = (nodes) => {
-	return nodes.reduce((acc, curr) => {
+const insertLineBreaks = (nodes: VNode[]) => {
+	return nodes.reduce((acc: Array<VNode>, curr: VNode) => {
 		acc.push(curr);
 		acc.push(h('br'));
 		return acc;

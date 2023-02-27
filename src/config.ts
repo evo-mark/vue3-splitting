@@ -8,11 +8,11 @@ export interface SplittingConfig {
 	prefix: string;
 	wrapperTag: string;
 	wrapperClass: string;
-	lineTag: string;
+	lineTag: keyof HTMLElementTagNameMap;
 	lineClass: string;
 	wordTag: string;
 	wordClass: string;
-	charTag: string;
+	charTag: keyof HTMLElementTagNameMap;
 	charClass: string;
 }
 export type UserConfig = Partial<SplittingConfig>;
