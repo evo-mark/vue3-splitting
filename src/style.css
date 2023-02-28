@@ -1,0 +1,19 @@
+.v3sp-wr .v3sp-w,
+.v3sp-wr .v3sp-c {
+    display: inline-block;
+}
+
+.v3sp-wr .v3sp-c {
+    position: relative;
+}
+
+.v3sp-wr .v3sp-c::before,
+.v3sp-wr .v3sp-c::after {
+  content: attr(data-char);
+  position: absolute;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  transition: inherit;
+  user-select: none;
+}

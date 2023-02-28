@@ -1,52 +1,97 @@
-# vue3-splitting
+<a href="https://southcoastweb.co.uk" target="_blank" alt="Link to southcoastweb's website">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://southcoastweb.co.uk/images/new-scw-logo-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="https://southcoastweb.co.uk/images/new-scw-logo.svg">
+      <img alt="southcoastweb company logo" src="https://southcoastweb.co.uk/images/new-scw-logo.svg">
+    </picture>
+</a>
 
-This template should help get you started developing with Vue 3 in Vite.
+<p align="center">
+  <img src="https://img.shields.io/npm/dm/vue3-splitting.svg" alt="Downloads"></a>
+  <a href="https://www.npmjs.com/package/vue3-splitting"><img src="https://img.shields.io/npm/v/vue3-splitting.svg" alt="Version"></a>
+  <a href="https://github.com/craigrileyuk/vue3-splitting/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/vue3-splitting.svg" alt="License"></a>
+</p>
 
-## Recommended IDE Setup
+# Vue3 Splitting
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+An adaptation of Stephen Shaw's excellent <a href="https://splitting.js.org/" alt="Go to the original Splitting website" target="_blank">Splitting</a> library, designed specifically to work with Vue 3.
 
-## Type Support for `.vue` Imports in TS
+Because it uses Vue3's rendering engine under the hood, Vue3 Splitting is fully compatible with SSR.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
-
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
-
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
+## Installation
 
 ```sh
-npm install
+npm i vue3-splitting
 ```
 
-### Compile and Hot-Reload for Development
+or
 
 ```sh
-npm run dev
+yarn add vue3-splitting
 ```
 
-### Type-Check, Compile and Minify for Production
+## Usage
 
-```sh
-npm run build
+No need to install Vue3 Splitting. It is a composable that returns a Vue3 functional component
+
+You can optionally import its styles though, to help make animating individual characters easier:
+
+```js
+import 'vue3-splitting/styles';
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+```html
+<template>
+	<Splitting />
+</template>
 
-```sh
-npm run test:unit
+<script setup>
+	const { Splitting, counts } = useSplitting('Hello World!');
+</script>
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+You can provide either a raw string, or any ref or computed object to `useSplitting` as the first argument. If the ref/computed changes, so will the rendered output and your counts.
 
-```sh
-npm run lint
+### Options
+
+`useSplitting` accepts a second parameter containing your user options:
+
+```js
+SplittingConfig {
+	lines: boolean; // Enable splitting of lines
+	words: boolean; // Enable splitting of words
+	chars: boolean; // Enable splitting of characters
+	lineOffset: number; // Start counting lines with this number
+	wordOffset: number; // Start counting words with this number
+	charOffset: number; // Start counting chars with this number
+	wrapperTag: string; // HTML tag to use for the wrapper element
+	wrapperClass: string; // Class applied to the wrapper element
+	lineTag: keyof HTMLElementTagNameMap; // HTML tag to use for each line element
+	lineClass: string;  // Class applied to line elements
+	wordTag: keyof HTMLElementTagNameMap; // HTML tag to use for each word element
+	wordClass: string; // Class applied to word elements
+	charTag: keyof HTMLElementTagNameMap; // HTML tag to use for each char element
+	charClass: string; // Class applied to char elements
+}
+```
+
+> Example
+
+```js
+const splittingString = ref('Hello World');
+const { Splitting: MySplittingElement } = useSplitting(splittingString, {
+	wrapperClass: 'my-splitting-element'
+});
+```
+
+### Counts
+
+The composable also returns a `counts` ref in addition to the functional component. This keeps a reactive record of the number of lines, words and characters contained in your string. Note that these values are calculated regardless of whether you disable splitting for that type via your user config.
+
+```js
+ref({
+	lines: number;
+	words: number;
+	chars: number;
+});
 ```

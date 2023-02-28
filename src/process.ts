@@ -1,28 +1,46 @@
-import type { SplittingConfig } from './config';
+import type { SplittingConfig, Counts } from './types';
+import type { VNode, Ref } from 'vue';
 import { h, Text, Fragment } from 'vue';
-import type { VNode } from 'vue';
+import { createClass } from './utils';
 
-const mapLines = (input: string): VNode[] => {
+/**
+ * Creates the initial VNodes containing each line
+ */
+const mapLines = (input: string, counts: Ref<Counts>): VNode[] => {
 	const lines: string[] = input.split(/(?:<br>|[\r\n]+)/i);
-	return lines.map((line) => h(Fragment, mapWords(line)));
+	counts.value.lines = lines.length;
+	return lines.map((line) => h(Fragment, mapWords(line, counts)));
 };
 
-const mapWords = (line: string): VNode[] => {
+/**
+ * Creates the initial VNodes containing each word
+ */
+const mapWords = (line: string, counts: Ref<Counts>): VNode[] => {
 	const words: string[] = line.split(/\s+/i);
-	return words.map((word) => h(Fragment, mapChars(word)));
+	const wordNodes = words.map((word) => h(Fragment, mapChars(word, counts)));
+	counts.value.words += wordNodes.length;
+	return wordNodes;
 };
 
-const mapChars = (word: string): VNode[] => {
+/**
+ * Creates the initial VNodes containing each character
+ */
+const mapChars = (word: string, counts: Ref<Counts>): VNode[] => {
 	const chars: string[] = word.split('');
-	return chars.map((char) => h(Text, char));
+	const charNodes = chars.map((char) => h(Text, char));
+	counts.value.chars += charNodes.length;
+	return charNodes;
 };
 
+/**
+ * Process lines (count handled in mapLines)
+ */
 const processLines = (lines: VNode[], config: SplittingConfig) => {
 	return lines.map((line, index) =>
 		h(
 			config.lineTag,
 			{
-				class: config.lineClass,
+				class: createClass('v3sp-l', config.lineClass),
 				style: {
 					'--line-index': index + config.lineOffset
 				}
@@ -34,15 +52,19 @@ const processLines = (lines: VNode[], config: SplittingConfig) => {
 	);
 };
 
+/**
+ * Process and count words
+ */
 const processWords = (lines: VNode[], config: SplittingConfig): void => {
 	let words = 0;
 	lines.forEach((line) => {
 		line.children = (line.children as VNode[]).map((word, index) => {
-			const textWord = word.children ? (word.children as VNode[]).map(c => c.children).join("") : "";
+			// Create a string of the word
+			const textWord = word.children ? (word.children as VNode[]).map((c) => c.children).join('') : '';
 			return h(
 				config.wordTag,
 				{
-					class: config.wordClass,
+					class: createClass('v3sp-w', config.wordClass),
 					style: {
 						'--word-index': index + words + config.wordOffset
 					},
@@ -57,6 +79,9 @@ const processWords = (lines: VNode[], config: SplittingConfig): void => {
 	});
 };
 
+/**
+ * Process and count characters
+ */
 const processChars = (lines: VNode[], config: SplittingConfig): void => {
 	let chars = 0;
 	lines.forEach((line) => {
@@ -65,7 +90,7 @@ const processChars = (lines: VNode[], config: SplittingConfig): void => {
 				return h(
 					config.charTag,
 					{
-						class: config.charClass,
+						class: createClass('v3sp-c', config.charClass),
 						style: {
 							'--char-index': index + chars + config.charOffset
 						},
@@ -79,6 +104,9 @@ const processChars = (lines: VNode[], config: SplittingConfig): void => {
 	});
 };
 
+/**
+ * Add HTML elements around each split as required
+ */
 const processNodeMap = (nodeMap: VNode[], config: SplittingConfig) => {
 	const lines = config.lines ? processLines(nodeMap, config) : nodeMap;
 	if (config.words) processWords(lines, config);
@@ -88,14 +116,15 @@ const processNodeMap = (nodeMap: VNode[], config: SplittingConfig) => {
 
 const insertWhitespace = (nodes: VNode[]) => {
 	nodes.forEach((node) => {
-		if (!node.children || Array.isArray(node.children) === false) return;
-		node.children = (node.children as VNode[]).reduce((acc: Array<VNode>, curr: VNode) => {
+		if (!node.children || Array.isArray(node.children) === false || !node.children.length) return;
+		node.children = (node.children as VNode[]).reduce((acc: Array<VNode>, curr: VNode, index: Number) => {
 			acc.push(curr);
+			if (index === (node.children as VNode[]).length - 1) return acc;
 			acc.push(
 				h(
 					'span',
 					{
-						class: 'whitespace'
+						class: createClass('whitespace')
 					},
 					' '
 				)
@@ -113,14 +142,19 @@ const insertLineBreaks = (nodes: VNode[]) => {
 	}, []);
 };
 
-export const processInput = (input: string, config: SplittingConfig): VNode[] => {
-	// Everything will be split by chars, words and lines anyway
-	// Each will be a 3-layer VNode
-	// Some VNodes might be #text, others might be tags
-
-	const nodeMap: VNode[] = mapLines(input);
+/**
+ * Main processing function. First maps the input and then orchestrates the required HTML elements
+ */
+export const processInput = (input: string, config: SplittingConfig, counts: Ref<Counts>): VNode[] => {
+	counts.value.lines = 0;
+	counts.value.words = 0;
+	counts.value.chars = 0;
+	const nodeMap = mapLines(input, counts);
 	const nodes: VNode[] = processNodeMap(nodeMap, config);
+	// Restore whitespace to between word elements
 	insertWhitespace(nodes);
-	if (config.lines === false) return insertLineBreaks(nodes);
-	else return nodes;
+	// Restore line breaks to between line elements if required
+	const output = config.lines === false ? insertLineBreaks(nodes) : nodes;
+
+	return output;
 };

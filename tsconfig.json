@@ -1,14 +1,17 @@
 {
-  "files": [],
-  "references": [
-    {
-      "path": "./tsconfig.config.json"
-    },
-    {
-      "path": "./tsconfig.app.json"
-    },
-    {
-      "path": "./tsconfig.vitest.json"
-    }
-  ]
+  "include": ["src/index.ts"],
+  "compilerOptions": {
+    "rootDir": "src",
+    "noEmitOnError": true,
+    "target": "ES2020",
+    "types": ["node"],
+    "skipLibCheck": true,
+    "declaration": true,
+    "declarationDir": "dist/types",
+    "preserveConstEnums": true,
+    "removeComments": true,
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+  }
 }
