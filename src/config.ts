@@ -1,4 +1,5 @@
-import type { UserConfig, SplittingConfig } from './types';
+import { type ComputedRef, computed, isRef } from 'vue';
+import type { UserConfig, SplittingConfig, MaybeComputedRef } from './types';
 
 export const defaultConfig: SplittingConfig = {
 	lines: true,
@@ -17,10 +18,10 @@ export const defaultConfig: SplittingConfig = {
 	charClass: ''
 };
 
-const processUserConfig = (userConfig: UserConfig): UserConfig => {
-	return userConfig;
+const processUserConfig = (userConfig: MaybeComputedRef<UserConfig>): MaybeComputedRef<UserConfig> => {
+	return isRef(userConfig) ? userConfig.value : userConfig;
 };
 
-export function resolveConfig(userConfig: UserConfig): SplittingConfig {
-	return Object.assign({}, defaultConfig, processUserConfig(userConfig));
+export function resolveConfig(userConfig: MaybeComputedRef<UserConfig>): ComputedRef<SplittingConfig> {
+	return computed(() => Object.assign({}, defaultConfig, processUserConfig(userConfig)));
 }

@@ -8,7 +8,10 @@ import { createClass } from './utils';
 
 import './style.css';
 
-export const useSplitting = (input: MaybeComputedRef<string>, userConfig: UserConfig = {}): SplittingOutput => {
+export const useSplitting = (
+	input: MaybeComputedRef<string>,
+	userConfig: MaybeComputedRef<UserConfig> = {}
+): SplittingOutput => {
 	const config = resolveConfig(userConfig);
 
 	const counts: Ref<Counts> = ref({
@@ -17,15 +20,15 @@ export const useSplitting = (input: MaybeComputedRef<string>, userConfig: UserCo
 		chars: 0
 	});
 	const processedInput: ComputedRef<VNode[]> = computed(() =>
-		processInput(isRef(input) ? input.value : input, config, counts)
+		processInput(isRef(input) ? input.value : input, config.value, counts)
 	);
 
 	return {
 		Splitting: () =>
 			h(
-				config.wrapperTag,
+				config.value.wrapperTag,
 				{
-					class: createClass('v3sp-wr', config.wrapperClass),
+					class: createClass('v3sp-wr', config.value.wrapperClass),
 					style: {
 						'--line-total': counts.value.lines,
 						'--word-total': counts.value.words,
