@@ -1,4 +1,4 @@
-import { type ComputedRef, computed, isRef, unref } from 'vue';
+import { type ComputedRef, computed,  unref } from 'vue';
 import type { UserConfig, SplittingConfig, MaybeComputedRef } from './types';
 
 /**

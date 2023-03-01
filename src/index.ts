@@ -13,7 +13,6 @@ export const useSplitting = (
 	userConfig: MaybeComputedRef<UserConfig> = {}
 ): SplittingOutput => {
 	const config = resolveConfig(userConfig);
-	console.log(config.value);
 
 	const counts: Ref<Counts> = ref({
 		lines: 0,
