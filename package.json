@@ -19,6 +19,7 @@
 		".": {
 			"import": "./dist/vue3-splitting.js",
 			"require": "./dist/vue3-splitting.mjs",
+			"browser": "./dist/vue3-splitting.umd.js",
 			"types": "./dist/types/index.d.ts"
 		},
 		"./styles": "./dist/style.css"
