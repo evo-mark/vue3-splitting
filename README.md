@@ -56,7 +56,7 @@ You can provide either a raw string, or any ref or computed object to `useSplitt
 
 > Options
 
-`useSplitting` accepts a second parameter containing your user options:
+`useSplitting` accepts a second parameter containing your user options. This can be either a standard JS object, or a Vue3 `Ref` or `Computed`:
 
 ```js
 SplittingConfig {
@@ -91,9 +91,9 @@ The composable also returns a `counts` ref in addition to the functional compone
 
 ```js
 ref({
-	lines: number;
-	words: number;
-	chars: number;
+  lines: number;
+  words: number;
+  chars: number;
 });
 ```
 

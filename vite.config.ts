@@ -16,10 +16,16 @@ export default defineConfig({
 		lib: {
 			entry: resolve(__dirname, 'src/index'),
 			fileName: 'vue3-splitting',
-			formats: ['es', 'cjs']
+			formats: ['es', 'cjs', "umd"],
+			name: "Vue3Splitting",
 		},
 		rollupOptions: {
-			external: ['vue']
-		}
-	}
+			external: ['vue'],
+			output: {
+				globals: {
+					vue: 'Vue'
+				}
+			}
+		},
+	},
 });

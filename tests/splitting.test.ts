@@ -52,3 +52,12 @@ it('renders correctly with no char splitting', () => {
 	expect(wrapper.findAll('.v3sp-w')).toHaveLength(2);
 	expect(wrapper.findAll('.v3sp-c')).toHaveLength(0);
 });
+
+it('returns a correct counts object', () => {
+	const { counts, Splitting } = useSplitting('Hello World<br>Goodbye World');
+	mount(Splitting);
+
+	expect(counts.value.lines).toBe(2);
+	expect(counts.value.words).toBe(4);
+	expect(counts.value.chars).toBe(22);
+});
