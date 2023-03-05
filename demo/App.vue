@@ -1,5 +1,11 @@
 <template>
-	<Header />
+	<h2>Component</h2>
+	<Vue3Splitting class="Testing" :words="false" style="color: red" wrapper-tag="ul" line-tag="li"
+		>Testing this out <br />
+		And a second line</Vue3Splitting
+	>
+	<h2>Functional component</h2>
+	<Header id="test" class="font-bold" @click="onClick" />
 	{{ counts }}
 </template>
 
@@ -12,8 +18,7 @@ const config = computed(() => ({
 	lines: true,
 	words: false,
 	chars: true,
-	lineOffset: 10,
-	wrapperClass: 'font-bold'
+	lineOffset: 10
 }));
 
 setInterval(() => {
@@ -23,10 +28,11 @@ setInterval(() => {
 	} else {
 		sentence.value = defaultSentence;
 	}
-	//config.value.lines = !config.value.lines;
 }, 5000);
 
 const { Splitting: Header, counts } = useSplitting(sentence, config);
+
+const onClick = () => console.log('Clicked');
 </script>
 
 <style>

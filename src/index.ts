@@ -1,19 +1,25 @@
 import type { UserConfig, Counts, MaybeComputedRef, SplittingOutput } from './types';
 import type { Ref, ComputedRef, VNode } from 'vue';
 
-import { resolveConfig } from './config';
-import { h, computed, isRef, ref } from 'vue';
+import { resolveConfig, defaultConfig } from './config';
+import { h, computed, isRef, ref, mergeProps } from 'vue';
 import { processInput } from './process';
-import { createClass } from './utils';
 
 import './style.css';
 
+/* *********************************************
+ * Component Version
+ * ******************************************* */
+export { Vue3Splitting } from './component';
+
+/* *********************************************
+ * Composable Version
+ * ******************************************* */
 export const useSplitting = (
 	input: MaybeComputedRef<string>,
 	userConfig: MaybeComputedRef<UserConfig> = {}
 ): SplittingOutput => {
 	const config = resolveConfig(userConfig);
-	console.log(config.value);
 
 	const counts: Ref<Counts> = ref({
 		lines: 0,
@@ -24,20 +30,34 @@ export const useSplitting = (
 		processInput(isRef(input) ? input.value : input, config.value, counts)
 	);
 
-	return {
-		Splitting: () =>
-			h(
-				config.value.wrapperTag,
+	const Splitting = (props = {}) => {
+		// Filter out the props that are part of the config to stop them polluting the HTML element
+		const configProps = Object.keys(defaultConfig);
+		props = Object.fromEntries(
+			Object.entries(props).filter(([key]) => {
+				return configProps.includes(key) === false;
+			})
+		);
+		return h(
+			config.value.wrapperTag,
+			mergeProps(
 				{
-					class: createClass('v3sp-wr', config.value.wrapperClass),
+					class: 'v3sp-wr',
 					style: {
 						'--line-total': counts.value.lines,
 						'--word-total': counts.value.words,
 						'--char-total': counts.value.chars
 					}
 				},
-				processedInput.value
+				props
 			),
+			processedInput.value
+		);
+	};
+	Splitting.inheritAttrs = false;
+
+	return {
+		Splitting,
 		counts
 	};
 };

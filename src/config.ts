@@ -9,7 +9,6 @@ export const defaultConfig: SplittingConfig = {
 	wordOffset: 0,
 	charOffset: 0,
 	wrapperTag: 'div',
-	wrapperClass: '',
 	lineTag: 'div',
 	lineClass: '',
 	wordTag: 'span',

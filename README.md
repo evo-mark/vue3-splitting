@@ -40,9 +40,11 @@ You can optionally import its styles though, to help make animating individual c
 import 'vue3-splitting/styles';
 ```
 
+### **Functional Component (Composition API)**
+
 ```html
 <template>
-	<Splitting />
+	<Splitting class="my-splitting-element" />
 </template>
 
 <script setup>
@@ -52,7 +54,7 @@ import 'vue3-splitting/styles';
 
 You can provide either a raw string, or any ref or computed object to `useSplitting` as the first argument. If the ref/computed changes, so will the rendered output and your counts.
 
-### Options
+> Options
 
 `useSplitting` accepts a second parameter containing your user options:
 
@@ -65,7 +67,6 @@ SplittingConfig {
 	wordOffset: number; // Start counting words with this number
 	charOffset: number; // Start counting chars with this number
 	wrapperTag: string; // HTML tag to use for the wrapper element
-	wrapperClass: string; // Class applied to the wrapper element
 	lineTag: keyof HTMLElementTagNameMap; // HTML tag to use for each line element
 	lineClass: string;  // Class applied to line elements
 	wordTag: keyof HTMLElementTagNameMap; // HTML tag to use for each word element
@@ -80,7 +81,7 @@ SplittingConfig {
 ```js
 const splittingString = ref('Hello World');
 const { Splitting: MySplittingElement } = useSplitting(splittingString, {
-	wrapperClass: 'my-splitting-element'
+	lineClass: 'my-splitting-element--line'
 });
 ```
 
@@ -95,3 +96,25 @@ ref({
 	chars: number;
 });
 ```
+
+### **Standard Component (Options API)**
+
+You can also use Vue3 Splitting as a standard Vue component:
+
+```html
+<script>
+	import { Vue3Splitting } from 'vue3-splitting';
+
+	export default {
+		components: {
+			Vue3Splitting
+		}
+	};
+</script>
+
+<template>
+	<Vue3Splitting class="my-4" wrapper-tag="ul" line-tag="li" :words="false">Hello World!</Vue3Splitting>
+</template>
+```
+
+All of the `SplittingConfig` options can be used on the component as props.

@@ -1,4 +1,4 @@
-import type { Ref, ComputedRef, RendererNode } from 'vue';
+import type { Ref, ComputedRef, RendererNode, VNodeProps } from 'vue';
 
 export interface SplittingConfig {
 	lines: boolean;
@@ -8,7 +8,6 @@ export interface SplittingConfig {
 	wordOffset: number;
 	charOffset: number;
 	wrapperTag: string;
-	wrapperClass: string;
 	lineTag: keyof HTMLElementTagNameMap;
 	lineClass: string;
 	wordTag: string;
@@ -29,5 +28,5 @@ export type MaybeComputedRef<T> = ComputedRef<T> | MaybeRef<T>;
 
 export interface SplittingOutput {
 	counts: Ref<Counts>;
-	Splitting: () => RendererNode;
+	Splitting: (props?: VNodeProps) => RendererNode;
 }
