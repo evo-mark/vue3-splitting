@@ -5,7 +5,7 @@
 		And a second line</Vue3Splitting
 	>
 	<h2>Functional component</h2>
-	<Header id="test" class="font-bold" @click="onClick" />
+	<Header id="test" @click="onClick" />
 	{{ counts }}
 </template>
 
@@ -30,11 +30,8 @@ setInterval(() => {
 	} else {
 		sentence.value = defaultSentence;
 	}
-<<<<<<< HEAD
-=======
 	wrapperClass.value = wrapperClass.value === 'font-bold' ? 'italic' : 'font-bold';
 	//config.value.lines = !config.value.lines;
->>>>>>> efed91d29d65b620cfba178d27e4424eb46e9052
 }, 5000);
 
 const { Splitting: Header, counts } = useSplitting(sentence, config);
