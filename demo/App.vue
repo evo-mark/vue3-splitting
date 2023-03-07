@@ -1,6 +1,6 @@
 <template>
 	<h2>Component</h2>
-	<Vue3Splitting class="Testing" :words="false" style="color: red" wrapper-tag="ul" line-tag="li"
+	<Vue3Splitting id="testing" :words="false" style="color: red" wrapper-tag="ul" line-tag="li"
 		>Testing this out <br />
 		And a second line</Vue3Splitting
 	>
