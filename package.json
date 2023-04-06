@@ -1,6 +1,6 @@
 {
 	"name": "vue3-splitting",
-	"version": "1.2.1",
+	"version": "1.2.2",
 	"author": "southcoastweb",
 	"homepage": "https://southcoastweb.co.uk",
 	"scripts": {
@@ -11,14 +11,16 @@
 		"format": "prettier --write src/",
 		"prepublishOnly": "npm run lint && npm run build"
 	},
-	"main": "./dist/vue3-splitting.js",
-	"module": "./dist/vue3-splitting.mjs",
+	"main": "./dist/vue3-splitting.cjs",
+	"module": "./dist/vue3-splitting.js",
+	"browser": "./dist/vue3-splitting.umd.cjs",
+	"type": "module",
 	"types": "./dist/types/index.d.ts",
 	"exports": {
 		".": {
 			"import": "./dist/vue3-splitting.js",
-			"require": "./dist/vue3-splitting.mjs",
-			"browser": "./dist/vue3-splitting.umd.js",
+			"require": "./dist/vue3-splitting.cjs",
+			"browser": "./dist/vue3-splitting.umd.cjs",
 			"types": "./dist/types/index.d.ts"
 		},
 		"./styles": "./dist/style.css"
