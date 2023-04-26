@@ -11,14 +11,15 @@
 		"format": "prettier --write src/",
 		"prepublishOnly": "npm run lint && npm run build"
 	},
-	"main": "./dist/vue3-splitting.js",
-	"module": "./dist/vue3-splitting.mjs",
+	"type": "module",
+	"main": "./dist/vue3-splitting.cjs",
+	"module": "./dist/vue3-splitting.js",
 	"types": "./dist/types/index.d.ts",
 	"exports": {
 		".": {
-			"import": "./dist/vue3-splitting.js",
-			"require": "./dist/vue3-splitting.mjs",
-			"browser": "./dist/vue3-splitting.umd.js",
+			"import": "./dist/vue3-splitting.cjs",
+			"require": "./dist/vue3-splitting.js",
+			"browser": "./dist/vue3-splitting.umd.cjs",
 			"types": "./dist/types/index.d.ts"
 		},
 		"./styles": "./dist/style.css"
@@ -31,7 +32,7 @@
 	},
 	"devDependencies": {
 		"@rushstack/eslint-patch": "^1.2.0",
-		"@testing-library/vue": "^6.6.1",
+		"@testing-library/vue": "^7.0.0",
 		"@types/jsdom": "^21.1.0",
 		"@types/node": "^18.14.0",
 		"@vitejs/plugin-vue": "^4.0.0",
@@ -45,7 +46,7 @@
 		"jsdom": "^21.1.0",
 		"npm-run-all": "^4.1.5",
 		"prettier": "^2.8.4",
-		"typescript": "~4.7.4",
+		"typescript": "^5.0.2",
 		"vite": "^4.1.3",
 		"vite-plugin-dts": "^2.0.2",
 		"vitest": "^0.29.1",

@@ -1,8 +1,8 @@
 <a href="https://southcoastweb.co.uk" target="_blank" alt="Link to southcoastweb's website">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://southcoastweb.co.uk/images/new-scw-logo-dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="https://southcoastweb.co.uk/images/new-scw-logo.svg">
-      <img alt="southcoastweb company logo" src="https://southcoastweb.co.uk/images/new-scw-logo.svg">
+      <source media="(prefers-color-scheme: dark)" srcset="https://southcoastweb.co.uk/app/logo-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="https://southcoastweb.co.uk/app/logo.svg">
+      <img alt="southcoastweb company logo" src="https://southcoastweb.co.uk/app/logo.svg">
     </picture>
 </a>
 
@@ -18,103 +18,6 @@ An adaptation of Stephen Shaw's excellent <a href="https://splitting.js.org/" al
 
 Because it uses Vue3's rendering engine under the hood, Vue3 Splitting is fully compatible with SSR.
 
-## Installation
+---
 
-```sh
-npm i vue3-splitting
-```
-
-or
-
-```sh
-yarn add vue3-splitting
-```
-
-## Usage
-
-No need to install Vue3 Splitting. It is a composable that returns a Vue3 functional component
-
-You can optionally import its styles though, to help make animating individual characters easier:
-
-```js
-import 'vue3-splitting/styles';
-```
-
-### **Functional Component (Composition API)**
-
-```html
-<template>
-	<Splitting class="my-splitting-element" />
-</template>
-
-<script setup>
-	const { Splitting, counts } = useSplitting('Hello World!');
-</script>
-```
-
-You can provide either a raw string, or any ref or computed object to `useSplitting` as the first argument. If the ref/computed changes, so will the rendered output and your counts.
-
-> Options
-
-`useSplitting` accepts a second parameter containing your user options. This can be either a standard JS object, or a Vue3 `Ref` or `Computed`:
-
-```js
-SplittingConfig {
-	lines: boolean; // Enable splitting of lines
-	words: boolean; // Enable splitting of words
-	chars: boolean; // Enable splitting of characters
-	lineOffset: number; // Start counting lines with this number
-	wordOffset: number; // Start counting words with this number
-	charOffset: number; // Start counting chars with this number
-	wrapperTag: string; // HTML tag to use for the wrapper element
-	lineTag: keyof HTMLElementTagNameMap; // HTML tag to use for each line element
-	lineClass: string;  // Class applied to line elements
-	wordTag: keyof HTMLElementTagNameMap; // HTML tag to use for each word element
-	wordClass: string; // Class applied to word elements
-	charTag: keyof HTMLElementTagNameMap; // HTML tag to use for each char element
-	charClass: string; // Class applied to char elements
-}
-```
-
-> Example
-
-```js
-const splittingString = ref('Hello World');
-const { Splitting: MySplittingElement } = useSplitting(splittingString, {
-	lineClass: 'my-splitting-element--line'
-});
-```
-
-### Counts
-
-The composable also returns a `counts` ref in addition to the functional component. This keeps a reactive record of the number of lines, words and characters contained in your string. Note that these values are calculated regardless of whether you disable splitting for that type via your user config.
-
-```js
-ref({
-  lines: number;
-  words: number;
-  chars: number;
-});
-```
-
-### **Standard Component (Options API)**
-
-You can also use Vue3 Splitting as a standard Vue component:
-
-```html
-<script>
-	import { Vue3Splitting } from 'vue3-splitting';
-
-	export default {
-		components: {
-			Vue3Splitting
-		}
-	};
-</script>
-
-<template>
-	<Vue3Splitting class="my-4" wrapper-tag="ul" line-tag="li" :words="false">Hello World!</Vue3Splitting>
-</template>
-```
-
-All of the `SplittingConfig` options can be used on the component as props.
+For full installation instructions and documentation, please visit [southcoastweb](https://southcoastweb.co.uk/open-source-software/vue-3-splitting/).

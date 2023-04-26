@@ -1,14 +1,12 @@
-import { type ComputedRef, computed,  unref } from 'vue';
+import { type ComputedRef, computed, unref } from 'vue';
 import type { UserConfig, SplittingConfig, MaybeComputedRef } from './types';
 
 /**
  * Get the value of value/ref/getter.
  */
 export function resolveUnref<T>(r: MaybeComputedRef<T>): T {
-	return typeof r === 'function'
-	  ? (r as any)()
-	  : unref(r)
-  }
+	return typeof r === 'function' ? (r as any)() : unref(r);
+}
 
 export const defaultConfig: SplittingConfig = {
 	lines: true,
@@ -27,7 +25,7 @@ export const defaultConfig: SplittingConfig = {
 };
 
 const processUserConfig = (userConfig: MaybeComputedRef<UserConfig>): MaybeComputedRef<UserConfig> => {
-	return resolveUnref(userConfig)
+	return resolveUnref(userConfig);
 };
 
 export function resolveConfig(userConfig: MaybeComputedRef<UserConfig>): ComputedRef<SplittingConfig> {

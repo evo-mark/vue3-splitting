@@ -121,13 +121,10 @@ const insertWhitespace = (nodes: VNode[]) => {
 			acc.push(curr);
 			if (index === (node.children as VNode[]).length - 1) return acc;
 			acc.push(
-				h(
-					'span',
-					{
-						class: createClass('whitespace')
-					},
-					' '
-				)
+				h('span', {
+					class: createClass('whitespace'),
+					innerHTML: '&nbsp;'
+				})
 			);
 			return acc;
 		}, []);
