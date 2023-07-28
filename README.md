@@ -1,8 +1,6 @@
-<a href="https://southcoastweb.co.uk" target="_blank" alt="Link to southcoastweb's website">
+<a href="https://evomark.co.uk" target="_blank" alt="Link to evoMark's website">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://southcoastweb.co.uk/app/logo-dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="https://southcoastweb.co.uk/app/logo.svg">
-      <img alt="southcoastweb company logo" src="https://southcoastweb.co.uk/app/logo.svg">
+      <img alt="evoMark company logo" src="https://hub.evomark.co.uk/assets/logos/text-logo.png">
     </picture>
 </a>
 
