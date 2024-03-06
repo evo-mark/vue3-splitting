@@ -57,7 +57,7 @@ it('returns a correct counts object', () => {
 	const { counts, Splitting } = useSplitting('Hello World<br>Goodbye World');
 	mount(Splitting);
 
-	expect(counts.value.lines).toBe(2);
-	expect(counts.value.words).toBe(4);
-	expect(counts.value.chars).toBe(22);
+	expect(counts.lines).toBe(2);
+	expect(counts.words).toBe(4);
+	expect(counts.chars).toBe(22);
 });

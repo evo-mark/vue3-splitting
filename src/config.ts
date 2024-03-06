@@ -1,33 +1,22 @@
-import { type ComputedRef, computed, unref } from 'vue';
-import type { UserConfig, SplittingConfig, MaybeComputedRef } from './types';
+import type { FullConfig } from './types';
+import { computed, toValue, type ComputedRef, type MaybeRefOrGetter } from 'vue';
+import type { UserConfig } from './types';
 
-/**
- * Get the value of value/ref/getter.
- */
-export function resolveUnref<T>(r: MaybeComputedRef<T>): T {
-	return typeof r === 'function' ? (r as any)() : unref(r);
-}
+// Define the type for the useResolvedConfig function
+type UseResolvedConfigFunction = (
+	props: FullConfig, // Assuming props can have any keys
+	userConfig: MaybeRefOrGetter<UserConfig> // Adjust this type according to your needs
+) => ComputedRef<FullConfig>;
 
-export const defaultConfig: SplittingConfig = {
-	lines: true,
-	words: true,
-	chars: true,
-	lineOffset: 0,
-	wordOffset: 0,
-	charOffset: 0,
-	wrapperTag: 'div',
-	lineTag: 'div',
-	lineClass: '',
-	wordTag: 'span',
-	wordClass: '',
-	charTag: 'span',
-	charClass: ''
+export const useResolvedConfig: UseResolvedConfigFunction = (props, userConfig) => {
+	return computed(() => {
+		const userConfigValue = toValue(userConfig);
+
+		return Object.fromEntries(
+			Object.entries(props).map(([key, value]) => {
+				if (Object.hasOwn(userConfigValue, key)) return [key, userConfigValue[key]];
+				else return [key, value];
+			})
+		) as FullConfig;
+	});
 };
-
-const processUserConfig = (userConfig: MaybeComputedRef<UserConfig>): MaybeComputedRef<UserConfig> => {
-	return resolveUnref(userConfig);
-};
-
-export function resolveConfig(userConfig: MaybeComputedRef<UserConfig>): ComputedRef<SplittingConfig> {
-	return computed(() => Object.assign({}, defaultConfig, processUserConfig(userConfig)));
-}

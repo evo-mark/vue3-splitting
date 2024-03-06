@@ -1,15 +1,17 @@
-<a href="https://southcoastweb.co.uk" target="_blank" alt="Link to southcoastweb's website">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://southcoastweb.co.uk/app/logo-dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="https://southcoastweb.co.uk/app/logo.svg">
-      <img alt="southcoastweb company logo" src="https://southcoastweb.co.uk/app/logo.svg">
-    </picture>
-</a>
+<p align="center">
+    <a href="https://evomark.co.uk" target="_blank" alt="Link to evoMark's website">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://evomark.co.uk/wp-content/uploads/static/evomark-logo--dark.svg">
+          <source media="(prefers-color-scheme: light)" srcset="https://evomark.co.uk/wp-content/uploads/static/evomark-logo--light.svg">
+          <img alt="evoMark company logo" src="https://evomark.co.uk/wp-content/uploads/static/evomark-logo--light.svg" width="500">
+        </picture>
+    </a>
+</p>
 
 <p align="center">
   <img src="https://img.shields.io/npm/dm/vue3-splitting.svg" alt="Downloads"></a>
   <a href="https://www.npmjs.com/package/vue3-splitting"><img src="https://img.shields.io/npm/v/vue3-splitting.svg" alt="Version"></a>
-  <a href="https://github.com/craigrileyuk/vue3-splitting/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/vue3-splitting.svg" alt="License"></a>
+  <a href="https://github.com/evo-mark/vue3-splitting/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/vue3-splitting.svg" alt="License"></a>
 </p>
 
 # Vue3 Splitting
@@ -20,4 +22,4 @@ Because it uses Vue3's rendering engine under the hood, Vue3 Splitting is fully 
 
 ---
 
-For full installation instructions and documentation, please visit [southcoastweb](https://southcoastweb.co.uk/open-source-software/vue-3-splitting/).
+For full installation instructions and documentation, please visit [evoMark](https://southcoastweb.co.uk/open-source-software/vue-3-splitting/).

@@ -1,21 +1,21 @@
-import type { Ref, ComputedRef, RendererNode, VNodeProps } from 'vue';
+import type { Component } from 'vue';
 
-export interface SplittingConfig {
+export interface FullConfig {
 	lines: boolean;
 	words: boolean;
 	chars: boolean;
 	lineOffset: number;
 	wordOffset: number;
 	charOffset: number;
-	wrapperTag: string;
+	wrapperTag: keyof HTMLElementTagNameMap;
 	lineTag: keyof HTMLElementTagNameMap;
 	lineClass: string;
-	wordTag: string;
+	wordTag: keyof HTMLElementTagNameMap;
 	wordClass: string;
 	charTag: keyof HTMLElementTagNameMap;
 	charClass: string;
 }
-export type UserConfig = Partial<SplittingConfig>;
+export type UserConfig = Partial<FullConfig>;
 
 export interface Counts {
 	lines: number;
@@ -23,10 +23,7 @@ export interface Counts {
 	chars: number;
 }
 
-export type MaybeRef<T> = T | Ref<T>;
-export type MaybeComputedRef<T> = ComputedRef<T> | MaybeRef<T>;
-
 export interface SplittingOutput {
-	counts: Ref<Counts>;
-	Splitting: (props?: VNodeProps) => RendererNode;
+	counts: Counts;
+	Splitting: Component;
 }
