@@ -15,13 +15,10 @@ const stripTags = (html: string, except = []) => {
 export const processSlottedContent = (nodes: VNode[]) => {
 	return brReplacer(
 		nodes.reduce((output, node) => {
-			const processedNode = (node.type === Fragment ? node.children[0] : node) as VNode<
-				RendererNode,
-				RendererElement,
-				{
-					[key: string]: any;
-				}
-			>;
+			let processedNode = node;
+			while(processedNode.type === Fragment) {
+				processedNode = node.children?.[0];
+			}
 
 			if (processedNode.type === Text) output += processedNode.children;
 			else if (processedNode.type === 'br') output += '<br />';
