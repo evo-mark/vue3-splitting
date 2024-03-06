@@ -1,35 +1,14 @@
 <template>
 	<h2>Functional component</h2>
-	<Header
-		ref="headingRef"
-		id="test"
-		:class="[
-			'vue3-headline',
-			{
-				'is-visible': isVisible
-			},
-			animation
-		]"
-		@click="onClick"
-		>Using the slot<br />Here</Header
-	>
-	{{ counts }}
-	<Vue3Splitting id="test2" :lines="false" :chars="false" v-slot="{ counts }"
-		>Now's the time {{ counts.lines }} take the money!</Vue3Splitting
+	<Headline>
+		<div>Now's the time to take the <br />money!</div></Headline
 	>
 </template>
 
 <script setup>
-import { useSplitting } from '../src';
 import { ref, computed } from 'vue';
-import { useElementVisibility } from '@vueuse/core';
+import Headline from './components/Headline.vue';
 
-const animation = ref('slide-up--staggered');
-
-const headingRef = ref(null);
-const isVisible = useElementVisibility(headingRef);
-
-const sentence = ref('Hello World<br>This is a test<br>of the things to come');
 const config = computed(() => ({
 	wrapperTag: 'header',
 	lines: false,
@@ -37,10 +16,6 @@ const config = computed(() => ({
 	chars: true,
 	lineOffset: 10
 }));
-
-const { Splitting: Header, counts } = useSplitting(sentence, config);
-
-const onClick = () => console.log('Clicked');
 </script>
 
 <style lang="postcss">

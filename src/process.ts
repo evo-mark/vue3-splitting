@@ -12,16 +12,22 @@ const stripTags = (html: string, except = []) => {
 		.replace(/<!--.*?-->/g, '');
 };
 
+const getSlotChildrenText = children => children.map(node => {
+	if (!node.children && node.type === "br") return "<br />";
+	else if (!node.children || typeof node.children === 'string') return node.children || ''
+	else if (Array.isArray(node.children)) return getSlotChildrenText(node.children)
+	else if (node.children.default) return getSlotChildrenText(node.children.default())
+  }).join('')
+
 export const processSlottedContent = (nodes: VNode[]) => {
 	return brReplacer(
 		nodes.reduce((output, node) => {
-			let processedNode = node;
-			while(processedNode.type === Fragment) {
-				processedNode = processedNode.children?.[0];
-			}
+			const append = Array.isArray(node.children) ? 
+				getSlotChildrenText(node.children) : 
+				node.type === "br" ? 
+				"<br />" : node.children;
 
-			if (processedNode.type === Text) output += processedNode.children;
-			else if (processedNode.type === 'br') output += '<br />';
+			output += append;
 
 			return output;
 		}, '')
