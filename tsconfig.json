@@ -1,11 +1,16 @@
 {
-  "include": ["src/index.ts"],
+  "include": [
+    "src/index.ts",
+    "src/*.d.ts"
+  ],
   "compilerOptions": {
     "rootDir": "src",
     "noEmitOnError": true,
     "target": "ESNext",
     "module": "ESNext",
-    "types": ["node"],
+    "types": [
+      "node"
+    ],
     "skipLibCheck": true,
     "declaration": true,
     "declarationDir": "dist/types",

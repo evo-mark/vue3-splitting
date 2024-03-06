@@ -1,4 +1,4 @@
-import { Fragment, Text, VNode, computed, toValue, type RendererNode, RendererElement } from 'vue';
+import { Fragment, Text, VNode, computed, toValue } from 'vue';
 
 const brReplacer = (input: string) => {
 	return input.replace(/(<br\s*\/?>|[\r\n]+)/gi, '#line#');

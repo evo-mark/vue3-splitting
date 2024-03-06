@@ -7,7 +7,7 @@
 		"dev": "vite --host",
 		"build": "vite build && tsc --emitDeclarationOnly",
 		"test:unit": "vitest --dom",
-		"lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+		"lint": "eslint ./src --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
 		"format": "prettier --write src/",
 		"prepublishOnly": "npm run lint && npm run build"
 	},
