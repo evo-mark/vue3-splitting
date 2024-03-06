@@ -17,7 +17,7 @@ export const processSlottedContent = (nodes: VNode[]) => {
 		nodes.reduce((output, node) => {
 			let processedNode = node;
 			while(processedNode.type === Fragment) {
-				processedNode = node.children?.[0];
+				processedNode = processedNode.children?.[0];
 			}
 
 			if (processedNode.type === Text) output += processedNode.children;
